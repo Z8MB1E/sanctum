@@ -1,0 +1,36 @@
+<script>
+  const body = `
+  <body>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=VT323&display=swap"
+      rel="stylesheet"
+    />
+    <div id="app">
+      <div class="crt">
+        <div class="scanline"></div>
+        <div class="mobile-notice">
+          Mobile Users: You may need to press Enter twice to execute a
+          command.<small style="display: block"
+            >This site is best experienced on desktop.</small
+          >
+        </div>
+        <!--<div class="work-in-progress" style="color: red; text-shadow: none; background-color: white;">THIS SITE IS NOT READY FOR PRODUCTION. PLEASE DO NOT SHARE THIS SITE WITH ANYONE UNTIL GIVEN THE GREEN LIGHT BY JASON. THIS MESSAGE WILL DISAPPEAR WHEN THE SITE IS READY.</div>-->
+        <div class="logo">
+          <img src="/uploads/events/Sanctum/sanctum-logo-crt.png" alt="" />
+        </div>
+        <div class="terminal"></div>
+        <div class="scrollToLine"></div>
+      </div>
+    </div>
+  </body>
+  `;
+
+  // clear out all html in the body tag and replace it with the above html
+  $("body").html(body);
+  $(
+    'link[href="/assets/public-65d36d57b7a0b49638d84aa451820c13eac81ebeb59f95309fec6eb21788f5b1.css"]'
+  ).remove();
+  Terminal.boot();
+</script>

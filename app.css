@@ -5,6 +5,8 @@
   --green-bg: #05321e;
   --red-color: #c0100a;
   --red-bg: #1b0302;
+  --yellow-color: #fffd6b;
+  --yellow-bg: #1b1b1b;
   --blue-color: #a5a5ff;
   --blue-bg: #4242e7;
   --off: #050505;
@@ -38,20 +40,134 @@
   font-style: italic;
 }
 
+/* TERMINAL - SANCTUM LOGO */
+.logo {
+  position: fixed;
+  top: 2em;
+  right: 2em;
+  width: 300px;
+}
+
+.logo img {
+  width: 100%;
+  image-rendering: pixelated;
+  opacity: 0;
+}
+
+.logo img.logo-visible {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+  animation: logo-spin 10s linear infinite;
+}
+
+/* center the logo on mobile and set opacity to half */
+@media (max-width: 768px) {
+  .logo {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .logo img.logo-visible {
+    opacity: 0.35;
+  }
+}
+
+@keyframes logo-spin {
+  0% {
+    transform: rotateY(0deg) rotateX(15deg);
+  }
+  100% {
+    transform: rotateY(360deg) rotateX(15deg);
+  }
+}
+
+.image {
+  width: 450px;
+  margin-top: 2em;
+}
+
+.image img {
+  width: 100%;
+  image-rendering: pixelated;
+}
+
+.relative {
+  position: relative;
+}
+
+.mobile-notice {
+  display: none;
+  background: white;
+  color: darkred;
+  padding: 0 1em;
+  text-shadow: none;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .mobile-notice {
+    display: block;
+  }
+}
+
+/* TERMINAL - PROJECTX - PULSING CIRCLES */
+.pulsing-circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--yellow-color);
+  animation: pulse 2s ease-in-out infinite;
+  /* animation-timing-function: step-end; */
+}
+
+.pulsing-circle::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--yellow-color);
+  transform: scale(0.5);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    /* opacity: 0.5; */
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 
 /* TERMINAL - CRT EFFECTS */
 .crt {
   position: fixed;
   inset: 0;
-  padding: 1em;
   background: radial-gradient(circle at center, rgb(0, 53, 0) 0%, #000 100%);
   color: var(--green-color);
   font-family: var(--font-family);
+  font-variant-ligatures: none;
   font-size: var(--font-size);
   text-shadow: 0 0 0.35rem var(--text-glow);
   animation: textShadow 1.6s infinite;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+.terminal {
+  padding: 1em;
 }
 
 @keyframes flicker {
