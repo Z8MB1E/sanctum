@@ -40,6 +40,10 @@
   font-style: italic;
 }
 
+.italic {
+  font-style: italic;
+}
+
 /* TERMINAL - SANCTUM LOGO */
 .logo {
   position: fixed;

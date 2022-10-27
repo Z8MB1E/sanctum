@@ -1,3 +1,6 @@
+const loreVersion = 1;
+const updateNotes = ["CEO's Logs"];
+
 const employees = [
   {
     name: "Jason F.",
@@ -119,7 +122,7 @@ const logFiles = [
     name: "Intern's Log (3/4)",
     date: "07/29/2022",
     data: [
-      `Project [REDACTED] is on schedule for testing in late October. I'm not sure how the results are going to compare to the preliminary trials, but if I learned anything from being around Dr. Mendelssohn, it's that I know nothing. Sure, I'm a theoretical physicist, but he's a Nobel Prize winner and the lab's top dog. I'm sure he knows what he's doing.`,
+      `Project [REDACTED] is on schedule for live testing in late October. I'm not sure how the results are going to compare to the preliminary trials, but if I learned anything from being around Dr. Mendelssohn, it's that I know nothing. Sure, I'm a theoretical physicist, but he's a Nobel Prize winner and the lab's top dog. I'm sure he knows what he's doing.`,
       "",
       `If I'm being honest, I'm not sure what I'm going to do after the project is over. I'm not sure I want to go back to school, but I'm not sure I want to stay here either. I guess I'll just have to wait and see. The Project doesn't wait for anyone, least of all me!`,
     ],
@@ -127,7 +130,7 @@ const logFiles = [
   {
     fileName: "intern.4",
     name: "Intern's Log (4/4)",
-    date: "10/25/2022",
+    date: "08/26/2022",
     data: [
       `Dr. Mendelssohn has vanished. No one knows what happened to him, and every one of our questions to the higher-ups is answered the same way: "An investigation is underway. Keep working, stick to the timeline, and stay focused." Not the most encouraging thing to say to the people who have worked with Dr. Mendelssohn on the Project every day for the past year.`,
       "",
@@ -135,6 +138,74 @@ const logFiles = [
       "",
       `I just hope they find him.`,
     ],
+  },
+  {
+    fileName: "ceo.1",
+    name: "CEO's Log (1/4)",
+    date: "01/01/2022",
+    data: [
+      `In the past three years, Sanctum Industries has fundamentally altered humanity's understanding of this world and its cosmos, and yet we work in secret. The world must never know the full truth, for its dissemination would bring only chaos and the ultimate destruction of the social order. The world must believe that either extraterrestrial life has not found us, that perhaps we are just insignificant to them, or that we are simply alone in the universe.`,"",`The world must never know that we are entirely ^not alone[italic]^. It would spell the end of everything our human civilization has built up since the dawn of time.`,"",`Sanctum Industries will not allow that to happen. We ^must[italic]^ maintain full control and containment over the knowledge we possess. To that end, I am authorizing Project [REDACTED]. We must understand the nature of the threat we face, and we must be prepared to defend ourselves against it.`,
+    ],
+  },
+  {
+    fileName: "ceo.2",
+    name: "CEO's Log (2/4)",
+    date: "02/11/2022",
+    data: [
+      `You know, I'm not in it for the money. I never was. What we are doing here is the culmination of thousands of years of human progress, much of it within the last two centuries alone. We are on the brink of a new golden age of humanity. If we can understand the nature of the anomalies of our universe, humanity can take its next "giant leap" into the stars.`,"",`Yes, there is money to be found here. There will be a lucrative market for what we are offering, but I don't care about that. The profits will come one way or another. I care about one thing and one thing only: transcendence. We are about to become more than before. We will learn how the anomalies came to Earth, and through human ingenuity, we will take their technology and use it to go the stars...`,"",`And it will be Sanctum Industries that leads humanity's charge into the final frontier.`,
+    ],
+  },
+  {
+    fileName: "ceo.3",
+    name: "CEO's Log (3/4)",
+    date: "04/01/2022",
+    data: [
+      `Mendelssohn is reporting some unusual activity near a number of our worldwide black sites. Apparently, people are going missing at odd hours of the night in circumstances that seem rather... unnatural. I've ordered a full investigation into the matter and have instructed Mendelssohn to keep working on Project [REDACTED].`,"",`We cannot afford to let this matter create delay in the Project. It is too important to allow it to be derailed. The timeframe for live testing remains 10/██. Until then, Mendelssohn will oversee the rest of the preliminary trials.`,"",`I, however, shall continue to look to the stars... the home of our future.`,
+    ],
+  },
+  {
+    fileName: "ceo.4",
+    name: "CEO's Log (3/4)",
+    date: "08/26/2022",
+    data: [
+      `Dr. Mendelssohn is MIA. His last report indicated the first visual sighting an extraterrestrial anomaly. He shared the footage with me. Only a brief glimpse was enough to trigger alarm bells in my head. Were we right all along? Were these creatures out to harm us?`,"",`With the disappearance of Dr. Mendelssohn, I fear my suspicions have been proven correct. In addition, progress on the Project is in jeopardy. We will continue to carry out the testing of the Project on 10/██, but I fear that the results will be inconclusive. I've ordered an investigation into the disappearance of the doctor, but I fear that those we have hired may not be ready for what they will find...`,"",`I must have faith. There is too much at stake. Sanctum will endure.`,
+    ],
+  }
+];
+
+const quickResponses = [
+  {
+    command: [
+      "hi",
+      "hello",
+      "hey",
+      "sup",
+      "yo",
+      "howdy",
+      "greetings",
+      "what's up",
+      "what's good",
+      "what's new",
+    ],
+    response:
+      "This terminal is not for casual conversation. Please use the 'help' command to see a list of available commands.",
+  },
+  {
+    command: [
+      "goodbye",
+      "bye",
+      "see ya",
+      "see you",
+      "later",
+      "adios",
+      "cya",
+      "peace",
+      "peace out",
+      "peace",
+    ],
+    response:
+      "Clearing session and signing you out. Restarting terminal boot sequence.",
+    effect: "Terminal.reboot",
   },
 ];
 
@@ -249,6 +320,25 @@ const Terminal = {
     );
     // show the sanctum logo
     $(".logo > img").addClass("logo-visible");
+    if (
+      !localStorage.getItem("sanctum_terminal_loreVersion") ||
+      localStorage.getItem("sanctum_terminal_loreVersion") !== JSON.stringify(loreVersion)
+    ) {
+      localStorage.setItem("sanctum_terminal_loreVersion", loreVersion);
+      // get the time in hh:mm format
+      const time = new Date().toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "numeric",
+      });
+      await Terminal.type(
+        [
+          `NEW DATA DECRYPTED AS OF ${time}: ${updateNotes.join(", ")}`,
+          "",
+        ],
+        { initialWait: 250, lineWait: 500 }
+      );
+    }
+    // if (localStorage.getItem("sanctum_terminal_newData")await Terminal.type([])
     Terminal.allowStopExecution = true;
     // if stopExecution is true, return
     document.addEventListener("keydown", (e) => {
@@ -258,6 +348,20 @@ const Terminal = {
       }
     });
     await Terminal.loop();
+  },
+
+  reboot: async () => {
+    await Terminal.clear();
+    await Terminal.type(
+      ["", "REBOOTING TERMINAL...", "THIS MAY TAKE A FEW MOMENTS."],
+      { lineWait: 500 }
+    );
+    await sleep(3000);
+    localStorage.removeItem("sanctum_terminal_booted");
+    localStorage.removeItem("sanctum_terminal_name");
+    localStorage.removeItem("sanctum_terminal_projectx");
+    await Terminal.clear();
+    await Terminal.boot();
   },
 
   loop: async () => {
@@ -374,7 +478,10 @@ const Terminal = {
       }
       $(".terminal").append(allCaps ? text[i].toUpperCase() : text[i]);
       await sleep(
-        Terminal.skipTyping ? 1 : (1000 - speed * 100) * (realistic ? Math.max(Math.random(), 0.5) : 1)
+        Terminal.skipTyping
+          ? 1
+          : (1000 - speed * 100) *
+              (realistic ? Math.max(Math.random(), 0.5) : 1)
       );
 
       document.querySelector(".scrollToLine").scrollIntoView(true);
@@ -396,8 +503,44 @@ const Terminal = {
       await Commands[cmd.split(" ")[0]].run(cmd.split(" ").slice(1));
       console.log(`cmd: ${cmd.split(" ").slice(1)}`);
     } else if (cmd) {
-      // else, print an error
-      await Terminal.type(`${cmd}: command not found`);
+      // first, check if input is a bad word via purgomalum
+      let response = await fetch(
+        `https://www.purgomalum.com/service/containsprofanity?text=${cmd}`
+      );
+      let isBadWord = await response.text();
+      if (isBadWord === "true") {
+        // don't be rude!!
+        await Terminal.type("", { initialWait: 1500 });
+        await Terminal.type(
+          [
+            "Input recorded.",
+            "IP address forwarded to Residential Life and IT Services.",
+            "Forwarding screen capture to Residential Director.",
+          ],
+          { lineWait: 1000, newLine: false, finalWait: 1000 }
+        );
+        await Terminal.type(["", "", "Just be nice from now on.", ""], {
+          finalWait: 3000,
+        });
+      } else {
+        // if the command is in the quickResponses array, return the response and execute the effect if there is one
+        let quickResponse = quickResponses.find((response) =>
+          response.command.includes(cmd)
+        );
+        if (quickResponse) {
+          await Terminal.type(["", quickResponse.response, ""], {
+            initialWait: 1000,
+            finalWait: 1000,
+          });
+          if (quickResponse.effect) {
+            // convert quickResponse.effect from string into a function
+            await eval(quickResponse.effect)();
+          }
+        } else {
+          // else, print an error
+          await Terminal.type(`${cmd}: command not found`);
+        }
+      }
     }
     // await Terminal.input();
   },
@@ -408,7 +551,10 @@ const Commands = {
     description: "Lists all available commands.",
     usage: "help",
     run: async () => {
-      await Terminal.type(["","You may increase output speed by holding ENTER, or interrupt program execution with Escape or Ctrl-C."]);
+      await Terminal.type([
+        "",
+        "You may increase output speed by holding ENTER, or interrupt program execution with Escape or Ctrl-C.",
+      ]);
       await Terminal.type(["", "AVAILABLE COMMANDS:"], { lineWait: 500 });
       // sort the commands by name
       let sortedCommands = Object.keys(Commands).sort();
@@ -669,10 +815,10 @@ const Commands = {
             "...",
             "...",
             "THIS PROCESS MAY TAKE SOME TIME. PLEASE CHECK BACK SOON.",
-            ""
+            "",
           ],
           { initialWait: 1000, lineWait: 1500 }
-        )
+        );
       }
     },
   },
@@ -694,6 +840,13 @@ const Commands = {
             initialWait: 250,
           });
         }
+        await Terminal.type(
+          [
+            "Additional log files are being decrypted. Please check back soon.",
+            "",
+          ],
+          { initialWait: 500, finalWait: 1500 }
+        );
       } else {
         const log = logFiles.find((log) => log.fileName === args[0]);
         if (log) {
@@ -722,6 +875,13 @@ const Commands = {
               initialWait: 250,
             });
           }
+          await Terminal.type(
+            [
+              "Additional log files are being decrypted. Please check back soon.",
+              "",
+            ],
+            { initialWait: 500, finalWait: 1500 }
+          );
         }
       }
     },
